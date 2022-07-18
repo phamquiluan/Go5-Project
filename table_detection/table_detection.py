@@ -6,6 +6,7 @@ prj_root = Path(__file__).parent.parent.resolve()
 
 def main():
     input_image = cv2.imread(os.path.join(prj_root, "sample.jpg"))
+
     # TODO: code here
 
     return [{
