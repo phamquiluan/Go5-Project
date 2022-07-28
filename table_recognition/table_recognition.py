@@ -74,10 +74,6 @@ def show(img, name="disp", width=1000):
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-
-prj_root = Path(__file__).parent.parent.resolve()
-
-
 def ensure_gray(image):
     try:
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -155,31 +151,3 @@ class TableRecognizer:
             # initialize instance
             cls.instance = cls()
         return cls.instance
-
-
-def main():
-    # input_image = cv2.imread(os.path.join(prj_root, "sample.jpg"))
-
-    for image_path in tqdm(
-        glob.glob("/home/luan/research/Go5-Project/data/images/*.jpg")
-    ):
-        image_name = os.path.basename(image_path)
-        filename = os.path.splitext(image_name)[0]
-
-        image = cv2.imread(image_path)
-        tables = TableRecognizer().process(image, table_list=[])
-
-        # cv2.imwrite(f"/home/luan/research/Go5-Project/debug/{image_name}", draw(image, tables))
-
-        output = [t.dict() for t in tables]
-
-        import json
-
-        with open(
-            f"/home/luan/research/Go5-Project/cache/table/{filename}.json", "w"
-        ) as ref:
-            json.dump(output, ref)
-
-
-if __name__ == "__main__":
-    main()
