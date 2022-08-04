@@ -151,3 +151,45 @@ class TableRecognizer:
             # initialize instance
             cls.instance = cls()
         return cls.instance
+=======
+import extract_table
+import math
+
+prj_root = Path(__file__).parent.parent.resolve()
+
+def main(show=False):
+    input_image = cv2.imread(os.path.join(prj_root, "sample.jpg"))
+    input_table_list = [{
+        "name": "table",
+        "xmin": 2.7792429e+02,
+        "ymin": 2.6385663e+02,
+        "xmax": 1.3853302e+03,
+        "ymax": 9.6729169e+02,
+    }]
+
+    pos = []
+    for tab in input_table_list:
+        crop_img = input_image[math.floor(tab["ymin"])-15:math.ceil(tab["ymax"])+15, 
+                               math.floor(tab["xmin"])-15:math.ceil(tab["xmax"])+15]
+        #cv2.imshow('image',crop_img)
+        #cv2.waitKey(0)
+
+        # [...., [[x_max, y_max], [x_min, y_min]], ....]
+        cell_boxes = extract_table.process_single_image(crop_img, show=show, save=False)
+        
+        pos.append(tab)
+        tab["cell_list"] = []
+        for cell in cell_boxes:
+            tab["cell_list"].append({
+                "name": "cell",
+                "xmin": cell[1][0],
+                "ymin": cell[1][1],
+                "xmax": cell[0][0],
+                "ymax": cell[0][1]
+            })
+
+    return pos
+
+if __name__ == "__main__":
+    print(main())
+>>>>>>> c2458a5 (Table Cell implementation & show-off notebook)
