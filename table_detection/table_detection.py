@@ -1,8 +1,27 @@
 import os
 from pathlib import Path
 import cv2
+import mmcv
+import numpy as np
+import math
+from numpy import array, float32, size
 
-prj_root = Path(__file__).parent.parent.resolve()
+def return_table(table_coordinates):
+
+    tables_dict = []
+
+    for table_data in table_coordinates:
+        table_dict = {
+            "name" : "table",
+            "xmin" : table_data[0],
+            "ymin" : table_data[1],
+            "xmax" : table_data[2],
+            "ymax" : table_data[3]
+        }
+
+        tables_dict.append(table_dict)
+  
+    return tables_dict
 
 class TableDetector:
     instance = None
@@ -38,17 +57,38 @@ class TableDetector:
 
 
 def main():
-    input_image = cv2.imread(os.path.join(prj_root, "sample.jpg"))
+    # Load model
+    config_file = '/content/CascadeTabNet/Config/cascade_mask_rcnn_hrnetv2p_w32_20e.py'
+    checkpoint_file = '/content/epoch_36.pth'
+    model = init_detector(config_file, checkpoint_file, device='cuda:0')
 
-    # TODO: code here
+    img = "~/Projects/Go5-Project/sample.jpg"
 
-    return [{
-        "name": "table",
-        "xmin": 100,
-        "ymin": 100,
-        "xmax": 200,
-        "ymax": 200,
-    }]
+    # Run Inference
+    result = inference_detector(model, img)
+
+    table_coordinates = []
+
+    ## extracting bordered tables
+    for bordered_tables in result[0][0]:
+	    table_coordinates.append(bordered_tables[:4].astype(int))
+
+    ## extracting borderless tables
+    for borderless_tables in result[0][2]:
+	    table_coordinates.append(borderless_tables[:4].astype(int))
+    
+    if size(table_coordinates) != 0:
+        table_data = return_table(table_coordinates)
+    else:
+        table_data = "Image does NOT contain a table"
+
+    return table_data
+
+
+
 
 if __name__ == "__main__":
     main()
+
+
+
