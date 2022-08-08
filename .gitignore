@@ -1,3 +1,6 @@
 *.swp
 env
 data
+.DS_Store
+.vim
+.vscode
