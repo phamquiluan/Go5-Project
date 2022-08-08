@@ -55,6 +55,25 @@ class TableDetector:
             cls.instance = cls()
         return cls.instance
 
+=======
+
+def return_table(table_coordinates):
+
+    tables_dict = []
+
+    for table_data in table_coordinates:
+        table_dict = {
+            "name" : "table",
+            "xmin" : table_data[0],
+            "ymin" : table_data[1],
+            "xmax" : table_data[2],
+            "ymax" : table_data[3]
+        }
+
+        tables_dict.append(table_dict)
+  
+    return tables_dict
+>>>>>>> a4b8a67 (add Install.md for model installation, code completed for table_detection)
 
 def main():
     # Load model
