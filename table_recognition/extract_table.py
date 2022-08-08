@@ -35,7 +35,6 @@ import json
 import numpy as np
 from pathlib import Path
 import progressbar
-from matplotlib import pyplot as plt
 
 
 def iter_all_files(folder_dir):
