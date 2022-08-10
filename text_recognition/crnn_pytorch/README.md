@@ -64,7 +64,7 @@ $ bash download_synth90k.sh
 
 ## Pretrained Model
 
-We pretrained the RCNN model on [Synth90k](http://www.robots.ox.ac.uk/~vgg/data/text/) dataset. The weights saved at `checkpoints/crnn_synth90k.pt`.
+We pretrained the RCNN model on [Synth90k](http://www.robots.ox.ac.uk/~vgg/data/text/) dataset. The weights saved at [Weight file](https://drive.google.com/drive/folders/1--LNuDfV-73-uhAuv4lVlpNeL_3-OUNP).
 
 ### Evaluate the model on the Synth90k dataset
 
