@@ -1,11 +1,11 @@
-from crnn_pytorch.src.model import CRNN
+from src.model import CRNN
 import torch
 import cv2
-from crnn_pytorch.src.predict import predict
-from crnn_pytorch.src.dataset import CustomDataset
+from src.predict import predict
+from src.dataset import CustomDataset
 from torch.utils.data import DataLoader
-from crnn_pytorch.src.dataset import Synth90kDataset, synth90k_collate_fn
-from crnn_pytorch.src.config import common_config as config
+from src.dataset import Synth90kDataset, synth90k_collate_fn
+from src.config import common_config as config
 
 
 class OCRModel:
