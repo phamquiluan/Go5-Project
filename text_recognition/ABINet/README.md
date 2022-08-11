@@ -77,15 +77,15 @@ Get the pretrained models from [BaiduNetdisk(passwd:kwck)](https://pan.baidu.com
 
 1. Pre-train vision model
     ```
-    CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py --config=configs/pretrain_vision_model.yaml
+    CUDA_VISIBLE_DEVICES=0,1,2,3 python3.7 main.py --config=configs/pretrain_vision_model.yaml
     ```
 2. Pre-train language model
     ```
-    CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py --config=configs/pretrain_language_model.yaml
+    CUDA_VISIBLE_DEVICES=0,1,2,3 python3.7 main.py --config=configs/pretrain_language_model.yaml
     ```
 3. Train ABINet
     ```
-    CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py --config=configs/train_abinet.yaml
+    CUDA_VISIBLE_DEVICES=0,1,2,3 python3.7 main.py --config=configs/train_abinet.yaml
     ```
 Note:
 - You can set the `checkpoint` path for vision and language models separately for specific pretrained model, or set to `None` to train from scratch
@@ -94,7 +94,7 @@ Note:
 ## Evaluation
 
 ```
-CUDA_VISIBLE_DEVICES=0 python main.py --config=configs/train_abinet.yaml --phase test --image_only
+CUDA_VISIBLE_DEVICES=0 python3.7 main.py --config=configs/train_abinet.yaml --phase test --image_only
 ```
 Additional flags:
 - `--checkpoint /path/to/checkpoint` set the path of evaluation model 
@@ -109,7 +109,7 @@ Integrated into [Huggingface Spaces 🤗](https://huggingface.co/spaces) using [
 ## Run Demo
 
 ```
-python demo.py --config=configs/train_abinet.yaml --input=figs/test
+python3.7 demo.py --config=configs/train_abinet.yaml --input=figs/test
 ```
 Additional flags:
 - `--config /path/to/config` set the path of configuration file 
