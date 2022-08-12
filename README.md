@@ -5,6 +5,12 @@
 Project Board: https://github.com/users/phamquiluan/projects/3/views/1
 
 
+# Prepare data
+
+1. Download data from here and put to `data` dir: https://drive.google.com/drive/folders/1J_z-laBlG14Fps81FVrUJUjesdND_JTx?usp=sharing
+2. The image dir path `$PWD/data/images`
+
+
 # Dev guide
 
 1. cd into your dir
