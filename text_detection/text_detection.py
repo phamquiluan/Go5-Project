@@ -1,20 +1,33 @@
-import torch, torchvision
-import mmcv
-import mmdet
-import mmocr
-
-from mmocr.utils.ocr import MMOCR
+def list_process(element):
+    element.pop()
+    x = element[0::2]
+    y = element[1::2]
+    x_min = min(x)
+    x_max = max(x)
+    y_min = min(y)
+    y_max = max(y)
+    element = dict()
+    element["xmin"] = x_min
+    element["ymin"] = y_min
+    element["xmax"] = x_max
+    element["ymax"] = y_max
+    return element
 
 
 def main():
-    img_file =""
-    output_file = ""
-    model_name = ""
-    
-    mmocr = MMOCR(det=model_name, recog=None)
-    output = mmocr.readtext(img_file, print_result=True, output=output_file, export_format = "json")
-    
-    return output
+    from mmocr.utils.ocr import MMOCR
 
-if __name__ == '__main__':
-    main()
+    import os
+    os.chdir("mmocr")
+
+    config_dir = os.path.join(os.getcwd(), 'configs/')
+    mmocr = MMOCR(det='FCE_CTW_DCNv2', config_dir=config_dir, recog=None)
+    img_dir = ''
+    
+    results = mmocr.readtext(
+       img_dir)
+    results = results[0]["boundary_result"]
+    results = list(map(list_process, results))
+    return results
+
+main()
