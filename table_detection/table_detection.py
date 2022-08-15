@@ -17,7 +17,13 @@ class TableDetector:
             assert os.path.exists(weights_path), weights_path
         
         # TODO: change this
-        self.model = lambda x: [100, 100, 200, 200]
+        self.model = lambda x: [{
+            "name": "table",
+            "xmin": 100,
+            "ymin": 100,
+            "xmax": 200,
+            "ymax": 200,
+        }]
 
     def process(self, image):
         output = self.model(image)
