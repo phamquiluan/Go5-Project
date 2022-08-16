@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 opencv-python
 fastapi
 uvicorn[standard]
