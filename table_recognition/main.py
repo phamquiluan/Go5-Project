@@ -6,7 +6,7 @@ from http import HTTPStatus
 import numpy as np
 
 from fastapi import FastAPI, UploadFile, File, HTTPException
-from table_recognizer import TableRecognizer
+from table_recognition import TableRecognizer
 
 app = FastAPI()
 
@@ -19,7 +19,7 @@ def isImageFile(file: UploadFile = File(...)):
     return file.content_type in ["image/png", "image/jpeg"]
 
 @app.post("/ai/infer")
-async def process(file: UploadFile = File(...)):
+async def process(file: UploadFile = File(...), table_list : list = None):
     try:
         image = None
         if isImageFile(file):
@@ -34,8 +34,10 @@ async def process(file: UploadFile = File(...)):
             )
         assert image is not None
 
+        print(f"Table list: {table_list}")
+
         table_recognizer : TableRecognizer = TableRecognizer.get_unique_instance()
-        output : list = table_recognizer.process(image)
+        output : list = table_recognizer.process(image, table_list= table_list)
         return output
     except Exception as e:
         raise HTTPException(
