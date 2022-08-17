@@ -1,0 +1,16 @@
+version: "3.9" 
+services:
+  table_detection:
+    build: table_detection/
+    ports:
+      - "8000:80"
+    volumes:
+      - ./table_detection:/code
+    restart: always
+  table_recognition:
+    build: table_recognition/
+    ports:
+      - "8001:80"
+    volumes:
+      - ./table_recognition:/code
+    restart: always
