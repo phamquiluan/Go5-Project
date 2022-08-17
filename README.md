@@ -33,3 +33,19 @@ pip install -r requirements.txt
 4. dev
 
 on your Python file.
+
+
+
+# Docker guide 
+
+1. build single service
+
+```
+DOCKER_BUILDKIT=1 BUILDKIT_PROGRESS=plain docker build -t table_detection -f table_detection/Dockerfile table_detection/
+```
+
+2. compose up
+
+```
+docker compose up --build
+```
