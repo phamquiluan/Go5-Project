@@ -38,10 +38,15 @@ on your Python file.
 
 # Docker guide 
 
+```
+export DOCKER_BUILDKIT=1
+export BUILDKIT_PROGRESS=plain
+```
+
 1. build single service
 
 ```
-DOCKER_BUILDKIT=1 BUILDKIT_PROGRESS=plain docker build -t table_detection -f table_detection/Dockerfile table_detection/
+docker build -t table_detection -f table_detection/Dockerfile table_detection/
 ```
 
 2. compose up
