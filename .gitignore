@@ -9,3 +9,19 @@ data
 cache
 debug
 __pycache__
+
+# random jupyter notebook files
+*.aux
+*.log
+*.gz
+*.toc
+
+# cache
+**/__pycache__
+**/.pytest_cache
+
+# Jupyter autosave
+**/.ipynb_checkpoints
+
+# PyCharm project
+**/.idea

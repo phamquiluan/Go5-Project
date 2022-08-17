@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import glob
 import os
 from pathlib import Path
@@ -80,11 +81,23 @@ def ensure_gray(image):
     except Exception:
         pass
     return image
+=======
+import os, sys
+from pathlib import Path
+import cv2
+import math
+from PIL import Image
+>>>>>>> 6be06ee (Update driver code for module table_recognition)
 
+
+lib_dir = os.path.join(Path(__file__).parent.resolve(), "table-transformer")
+sys.path.append(lib_dir)
+import core
 
 class TableRecognizer:
     instance = None
 
+<<<<<<< HEAD
     def __init__(self, weights_path=None):
         pass
 
@@ -144,6 +157,47 @@ class TableRecognizer:
         # show(draw(image, tables))
         # output = self.model(image)
         return tables
+=======
+    def __init__(self, weights_path = None):
+        # init model
+        if weights_path is None:
+            weights_path = os.path.join(
+                os.path.dirname(__file__),
+                "weight.pth"
+            ) 
+            assert os.path.exists(weights_path), weights_path
+        m = core.TableRecognizer(weights_path)
+        
+        self.__thresh = 0.95
+        self.model = lambda x: m.predict(x, thresh=self.__thresh)
+
+    def process(self, image, table_list : list):
+        output = []
+        for table in table_list:
+            table["cell_list"] = []
+            crop_tab = image[math.floor(table["ymin"]) - 15 : math.ceil(table["ymax"]) + 15, 
+                             math.floor(table["xmin"]) - 15 : math.ceil(table["xmax"]) + 15]
+            crop_tab = cv2.cvtColor(crop_tab, cv2.COLOR_BGR2RGB)
+            crop_tab = Image.fromarray(crop_tab).convert("RGB")
+
+            results = self.model(crop_tab)
+            for idx, score in enumerate(results["scores"].tolist()):
+                if score < self.__thresh:
+                    continue
+                if results["labels"][idx] not in [0, 6]:
+                    xmin, ymin, xmax, ymax = list(map(int, results["boxes"][idx]))
+                    table["cell_list"].append({
+                        "name": "cell",
+                        "xmin": xmin,
+                        "ymin": ymin,
+                        "xmax": xmax,
+                        "ymax": ymax
+                    })
+
+            output.append(table)
+        
+        return output
+>>>>>>> 6be06ee (Update driver code for module table_recognition)
 
     @classmethod
     def get_unique_instance(cls):
@@ -151,11 +205,15 @@ class TableRecognizer:
             # initialize instance
             cls.instance = cls()
         return cls.instance
+<<<<<<< HEAD
 =======
 import extract_table
 import math
 
 prj_root = Path(__file__).parent.parent.resolve()
+=======
+        
+>>>>>>> 6be06ee (Update driver code for module table_recognition)
 
 def main(show=False):
     input_image = cv2.imread(os.path.join(prj_root, "sample.jpg"))
@@ -167,6 +225,7 @@ def main(show=False):
         "ymax": 9.6729169e+02,
     }]
 
+<<<<<<< HEAD
     pos = []
     for tab in input_table_list:
         crop_img = input_image[math.floor(tab["ymin"])-15:math.ceil(tab["ymax"])+15, 
@@ -193,3 +252,12 @@ def main(show=False):
 if __name__ == "__main__":
     print(main())
 >>>>>>> c2458a5 (Table Cell implementation & show-off notebook)
+=======
+    table_recognizer = TableRecognizer(weights_path = os.path.join(lib_dir, "output", "pubtables1m_structure_detr_r18.pth"))
+    output = table_recognizer.process(input_image, input_table_list)
+
+    return output
+
+if __name__ == "__main__":
+    print(main())
+>>>>>>> 6be06ee (Update driver code for module table_recognition)
