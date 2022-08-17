@@ -4,3 +4,5 @@ data
 .DS_Store
 .vim
 .vscode
+data
+.ipynb_checkpoints
