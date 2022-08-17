@@ -1,11 +1,12 @@
 import os
 from pathlib import Path
 import cv2
+from mmdet.apis import init_detector, inference_detector, show_result_pyplot, show_result
 import mmcv
 import numpy as np
 import math
 from numpy import array, float32, size
-
+from PIL import Image
 def return_table(table_coordinates):
 
     tables_dict = []
@@ -77,12 +78,13 @@ def return_table(table_coordinates):
 
 def main():
     # Load model
-    config_file = '/content/CascadeTabNet/Config/cascade_mask_rcnn_hrnetv2p_w32_20e.py'
-    checkpoint_file = '/content/epoch_36.pth'
+    config_file = "/home/toan/Go5-Project/table_detection/CascadeTabNet/Config/cascade_mask_rcnn_hrnetv2p_w32_20e.py"
+    checkpoint_file = "/home/toan/Go5-Project/table_detection/checkpoints/epoch_36.pth"
+    
     model = init_detector(config_file, checkpoint_file, device='cuda:0')
 
-    img = "~/Projects/Go5-Project/sample.jpg"
-
+    img = "/home/toan/Go5-Project/sample.jpg"
+    
     # Run Inference
     result = inference_detector(model, img)
 
@@ -96,12 +98,21 @@ def main():
     for borderless_tables in result[0][2]:
 	    table_coordinates.append(borderless_tables[:4].astype(int))
     
-    if size(table_coordinates) != 0:
-        table_data = return_table(table_coordinates)
-    else:
-        table_data = "Image does NOT contain a table"
+    table_data = return_table(table_coordinates)
 
-    return table_data
+    if len(table_data) != 0:
+        # visualize the results in a new window
+        show_result_pyplot(img, result,('Bordered', 'Cell', 'Borderless'), score_thr=0.5)
+        
+        # or save the visualization results to image files
+        show_result(img, result, ('Bordered', 'Cell', 'Borderless'), out_file = "out_file.jpg")
+    else:
+        im1 = Image.open(img) 
+  
+        im1 = im1.save("out_file.jpg")
+
+    for i in table_data:
+        print(i)
 
 
 
