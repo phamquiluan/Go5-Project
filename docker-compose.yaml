@@ -3,14 +3,14 @@ services:
   table_detection:
     build: table_detection/
     ports:
-      - "8000:80"
+      - "${TABLE_DETECTION_PORT}:80"
     volumes:
       - ./table_detection:/code
     restart: always
   table_recognition:
     build: table_recognition/
     ports:
-      - "8001:80"
+      - "${TABLE_RECOGNITION_PORT}:80"
     volumes:
       - ./table_recognition:/code
     restart: always
