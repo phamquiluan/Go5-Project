@@ -149,8 +149,28 @@ class TableRecognizer:
             # initialize instance
             cls.instance = cls()
         return cls.instance
+    
+    def __non_oversegment(self, grid_cells, func_cells, intersect_ratio = 0.98):
+        for func_cell in func_cells:
+            fxmin, fymin, fxmax, fymax = func_cell
+            
+            idx = 0
+            while idx < len(grid_cells):
+                gxmin, gymin, gxmax, gymax = grid_cells[idx]
+                grid_area = abs(gxmin - gxmax) * abs(gymin - gymax)
+                
+                w_intersect = min(gxmax, fxmax) - max(gxmin, fxmin)
+                h_intersect = min(gymax, fymax) - max(gymin, fymin)
+                intersect_area = 0 if (w_intersect < 0) or (h_intersect < 0) else w_intersect * h_intersect
+                
+                # delete grid_cell that has a large intersect area with one func_cell
+                if (intersect_area / grid_area) > intersect_ratio:
+                    del grid_cells[idx]
+                    continue
+                idx += 1        
 
-    def __deduce_grid_cells(self, results):
+    def __deduce_grid_cells(self, results, oversegment=True):
+        tables = []
         func_cells = []
         rows = []
         cols = []
@@ -165,7 +185,7 @@ class TableRecognizer:
                 cols.append(bbox)
             elif results["labels"][idx] == 2:
                 rows.append(bbox)
-            elif results["labels"][idx] in (3, 4, 5):
+            elif results["labels"][idx] in (5,): # span cell only
                 func_cells.append(bbox)
         
         # extract all grid cells from intersection between a row and a column 
@@ -175,7 +195,8 @@ class TableRecognizer:
                 grid_cells.append([xmin, ymin, xmax, ymax])
         
         # eliminate oversegmentation on grid_cells
-        self.__non_oversegment(grid_cells, func_cells)
+        if (not oversegment) or (0 <= oversegment <= 1):
+            self.__non_oversegment(grid_cells, func_cells, intersect_ratio = oversegment)
 
         return grid_cells + func_cells
 
