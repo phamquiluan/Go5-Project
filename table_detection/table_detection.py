@@ -78,12 +78,12 @@ def return_table(table_coordinates):
 
 def main():
     # Load model
-    config_file = "/home/toan/Go5-Project/table_detection/CascadeTabNet/Config/cascade_mask_rcnn_hrnetv2p_w32_20e.py"
-    checkpoint_file = "/home/toan/Go5-Project/table_detection/checkpoints/epoch_36.pth"
+    config_file = "Project/Go5-Project/table_detection/CascadeTabNet/Config/cascade_mask_rcnn_hrnetv2p_w32_20e.py"
+    checkpoint_file = "Project/Go5-Project/table_detection/checkpoints/epoch_1.pth"
     
     model = init_detector(config_file, checkpoint_file, device='cuda:0')
 
-    img = "/home/toan/Go5-Project/sample.jpg"
+    img = "/Go5-Project/sample.jpg"
     
     # Run Inference
     result = inference_detector(model, img)
@@ -102,7 +102,7 @@ def main():
 
     if len(table_data) != 0:
         # visualize the results in a new window
-        show_result_pyplot(img, result,('Bordered', 'Cell', 'Borderless'), score_thr=0.5)
+        show_result_pyplot(img, result,('Bordered', 'Cell', 'Borderless'), score_thr=0.8)
         
         # or save the visualization results to image files
         show_result(img, result, ('Bordered', 'Cell', 'Borderless'), out_file = "out_file.jpg")
