@@ -11,7 +11,7 @@ Chosen along the product, we are handling TSR problem using [`table-transformer(
     ```
     pip install -r requirements.txt
     ```
-2. To re-produce the evaluation in `\table_recognition\table_recognition.ipynb`, dowload the specific structure dataset from [`PubTables-1M`]     (https://msropendata.com/datasets/505fcbe3-1383-42b1-913a-f651b8b712d3), and put it in folder `data` in the root of dir `table-transformer` (create one if none). </br>
+2. To re-produce the evaluation in `\table_recognition\table_recognition.ipynb`, dowload the specific structure dataset from [`PubTables-1M`](https://msropendata.com/datasets/505fcbe3-1383-42b1-913a-f651b8b712d3), and put it in folder `data` in the root of dir `table-transformer` (create one if none). </br>
    Notice that this dataset is quite heavy with limit dowload bandwidth (2 hours of dowloading estimated).
 3. The checkpoint in use can be found here: [`checkpoint20`](https://pubtables1m.blob.core.windows.net/model/pubtables1m_structure_detr_r18.pth). </br>
    Dowload the checkpoint and put it in folder `output` in the root of dir `table-transformer` (create one if none).
