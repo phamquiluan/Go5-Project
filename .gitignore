@@ -25,3 +25,4 @@ __pycache__
 
 # PyCharm project
 **/.idea
+table_recognition/checkpoints/
