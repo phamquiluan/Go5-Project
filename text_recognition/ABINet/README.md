@@ -102,6 +102,7 @@ Additional flags:
 - `--model_eval [alignment|vision]` which sub-model to evaluate
 - `--image_only` disable dumping visualization of attention masks
 
+
 ## Web Demo
 
 Integrated into [Huggingface Spaces 🤗](https://huggingface.co/spaces) using [Gradio](https://github.com/gradio-app/gradio). Try out the Web Demo: [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/tomofi/ABINet-OCR)
@@ -125,8 +126,6 @@ Successful and failure cases on low-quality images:
 ![cases](./figs/cases.png)
 
 ## Citation
-If you find our method useful for your reserach, please cite
-```bash 
 @article{fang2021read,
   title={Read Like Humans: Autonomous, Bidirectional and Iterative Language Modeling for Scene Text Recognition},
   author={Fang, Shancheng and Xie, Hongtao and Wang, Yuxin and Mao, Zhendong and Zhang, Yongdong},
@@ -140,3 +139,8 @@ If you find our method useful for your reserach, please cite
 This project is only free for academic research purposes, licensed under the 2-clause BSD License - see the LICENSE file for details.
 
 Feel free to contact fangsc@ustc.edu.cn if you have any questions.
+
+
+
+_____________________________________________________________________________________________________________
+
