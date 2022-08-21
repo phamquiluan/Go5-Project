@@ -1,0 +1,31 @@
+version: "3.9" 
+services:
+  table_detection:
+    build: table_detection/
+    ports:
+      - "${TABLE_DETECTION_PORT}:80"
+    volumes:
+      - ./table_detection:/code
+    restart: always
+  table_recognition:
+    build: table_recognition/
+    ports:
+      - "${TABLE_RECOGNITION_PORT}:80"
+    volumes:
+      - ./table_recognition:/code
+    restart: always
+  text_detection:
+    build: text_detection/
+    ports:
+      - "${TEXT_DETECTION_PORT}:80"
+    volumes:
+      - ./text_detection:/code
+    restart: always
+  text_recognition:
+    build: text_recognition/
+    ports:
+      - "${TEXT_RECOGNITION_PORT}:80"
+    volumes:
+      - ./text_recognition:/code
+    restart: always
+ 

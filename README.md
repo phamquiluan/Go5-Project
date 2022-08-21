@@ -5,6 +5,12 @@
 Project Board: https://github.com/users/phamquiluan/projects/3/views/1
 
 
+# Prepare data
+
+1. Download data from here and put to `data` dir: https://drive.google.com/drive/folders/1J_z-laBlG14Fps81FVrUJUjesdND_JTx?usp=sharing
+2. The image dir path `$PWD/data/images`
+
+
 # Dev guide
 
 1. cd into your dir
@@ -27,3 +33,24 @@ pip install -r requirements.txt
 4. dev
 
 on your Python file.
+
+
+
+# Docker guide 
+
+```
+export DOCKER_BUILDKIT=1
+export BUILDKIT_PROGRESS=plain
+```
+
+1. build single service
+
+```
+docker build -t table_detection -f table_detection/Dockerfile table_detection/
+```
+
+2. compose up
+
+```
+docker compose up --build
+```

@@ -2,6 +2,3 @@ opencv-python
 fastapi
 uvicorn[standard]
 python-multipart
-numpy
-pathlib
-math
