@@ -1,0 +1,5 @@
+pillow
+opencv-python
+cffi
+pandas
+defusedxml
