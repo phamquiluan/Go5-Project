@@ -1,24 +1,13 @@
-def list_process(element):
-    element.pop()
-    x = element[0::2]
-    y = element[1::2]
-    x_min = min(x)
-    x_max = max(x)
-    y_min = min(y)
-    y_max = max(y)
-    element = dict()
-    element["xmin"] = x_min
-    element["ymin"] = y_min
-    element["xmax"] = x_max
-    element["ymax"] = y_max
-    return element
 
+import os
+from helper import run_inference
 
-def main():
-    from mmocr.utils.ocr import MMOCR
+IMG_PATH = '/home/an/image/Screenshot11.png'
+OUTPUT_DIR = "/home/an/cropped_img/"
 
-    import os
-    os.chdir("mmocr")
+#path to mmocr library 
+MMOCR_PATH = "/home/an/test_folder/mmocr"
+os.chdir(MMOCR_PATH)
 
     config_dir = os.path.join(os.getcwd(), 'configs/')
     mmocr = MMOCR(det='FCE_CTW_DCNv2', config_dir=config_dir, recog=None)
@@ -31,3 +20,4 @@ def main():
     return results
 
 main()
+run_inference(IMG_PATH, OUTPUT_DIR)
