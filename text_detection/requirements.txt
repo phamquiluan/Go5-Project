@@ -2,3 +2,8 @@ opencv-python
 fastapi
 uvicorn[standard]
 python-multipart
+torch
+torchvision
+openmim
+ipykernel
+jupyter
