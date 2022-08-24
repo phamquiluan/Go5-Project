@@ -61,7 +61,7 @@ class TableDetector:
 def main():
     # Load model
     config_file = "Project/Go5-Project/table_detection/CascadeTabNet/Config/cascade_mask_rcnn_hrnetv2p_w32_20e.py"
-    checkpoint_file = "Project/Go5-Project/table_detection/checkpoints/epoch_1.pth"
+    checkpoint_file = "Project/Go5-Project/table_detection/checkpoint_path/epoch_1.pth"
     
     model = init_detector(config_file, checkpoint_file, device='cuda:0')
 

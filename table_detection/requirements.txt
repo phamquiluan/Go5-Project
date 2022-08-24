@@ -5,3 +5,9 @@ python-multipart
 numpy
 pathlib
 math
+matplotlib
+cv2
+json
+pycotools
+pycocotools
+gdown
