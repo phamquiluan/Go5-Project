@@ -42,6 +42,7 @@ git clone https://github.com/DevashishPrasad/CascadeTabNet.git
 4. Download the Pretrained Model into the `/Go5-Project/table_detection/checkpoint_path` dir. </br>
 ```
 mkdir checkpoint_path
+cd /Go5-Project/table_detection/checkpoint_path
 gdown "https://drive.google.com/u/0/uc?id=1-mVr4UBicFk3mjUz5tsVPjQ4jzRtiT7V&export=download"
 ```
 
@@ -54,6 +55,49 @@ For detailed instruction and installation, please follow: `Go5-Project/table_det
 
 ---
 ## II. Evaluation
+
+### Our Result
+
+By running inference with General Model Table Detecion checkpoint (link to download below) and TableBank latex test, we were able to produce the result below. 
+
+<img src="eval_result.png" width="600" height="100"/>
+
+### How to perform evaluation
+
+To produce the evaluation in `table_detect_notebook.ipynb`, please download the [TableBank](https://doc-analysis.github.io/tablebank-page/) dataset and put it in `Go5-Project/table_detection` dir (the first set should be enough due to the size of the whole dataset).
+
+Please set the correct paths for:
+
+1. config_fname: `Go5-Project/table_detection/CascadeTabNet/Config/cascade_mask_rcnn_hrnetv2p_w32_20e.py`
+
+2. Test .json file (this should be in the following path if you downloaded the dataset from the [link](https://doc-analysis.github.io/tablebank-page/) above): `/table_detection/TableBank/Detection/annotations/tablebank_latex_test.json'`
+
+3. checkpoint_file_path: `Go5-Project/table_detection/checkpoint_path/epoch_24.pth` </br>
+You can change the checkpoint by downloading some of the checkpoints of the Model below
+
+4. image_name: `Go5-Project/table_detection/TableBank/Detection/images/`
+
+Below are some of the Checkpoints of the model that we have tested out, please install and put them in this dir `Go5-Project/table_detection/checkpoint_path/`. Visit [CascadeTabNet](https://github.com/DevashishPrasad/CascadeTabNet) for more details.
+
+<table>
+  <tr>
+  <th>Model Name</th><th>Checkpoint File</th>
+  </tr>
+  <tr>
+  <td>General Model table detection</td><td><a href="https://drive.google.com/open?id=1-xfq5hDmFdKgbY9FSFTmhSlcb2p13RPn">Checkpoint</a></td>
+  </tr>
+  <tr>
+  <td>ICDAR 13 table detection</td><td><a href="https://drive.google.com/open?id=1-mVr4UBicFk3mjUz5tsVPjQ4jzRtiT7V">Checkpoint</a></td>
+  </tr>
+  <tr>
+  <td>Table Bank Word table detection</td><td><a href="https://drive.google.com/open?id=1-ZnV84t61IrkAfQH7dOATpo_T4C1J4Qa">Checkpoint</a></td>
+  </tr>    
+  <tr>
+  <td>Table Bank Latex table detection</td><td><a href="https://drive.google.com/open?id=1-9EzU_LfD6fE8iJFjOZ3nBsCObqhpNUa">Checkpoint</a></td>
+  </tr>    
+  <tr>
+      
+</table>
 
 
 
