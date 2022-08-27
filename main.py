@@ -73,9 +73,6 @@ class Cell(Box):
     name: str = "cell"
     texts: List[Text] = []
 
-    def is_valid(self):
-        return self.width > CELL_MIN_WIDTH and self.height > CELL_MIN_HEIGHT
-
 
 class Table(Box):
     name: str = "table"

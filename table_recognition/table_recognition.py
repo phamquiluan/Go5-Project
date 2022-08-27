@@ -81,7 +81,7 @@ prj_root = Path(__file__).parent.parent.resolve()
 def ensure_gray(image):
     try:
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    except:
+    except Exception:
         pass
     return image
 
