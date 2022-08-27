@@ -37,8 +37,8 @@ async def process(file: UploadFile = File(...), table_list : list = None):
         print(f"Table list: {table_list}")
 
         table_recognizer : TableRecognizer = TableRecognizer.get_unique_instance()
-        output : list = table_recognizer.process(image, table_list= table_list)
-        return output
+        tables : list = table_recognizer.process(image, table_list= table_list)
+        return [t.dict() for t in tables]
     except Exception as e:
         raise HTTPException(
             status_code=HTTPStatus.INTERNAL_SERVER_ERROR.value,

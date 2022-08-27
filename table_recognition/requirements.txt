@@ -2,3 +2,6 @@ opencv-python
 fastapi
 uvicorn[standard]
 python-multipart
+tqdm
+numpy
+pydantic
