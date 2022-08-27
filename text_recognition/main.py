@@ -34,8 +34,8 @@ async def process(file: UploadFile = File(...)):
             )
         assert image is not None
 
-        text_detector : TextDetector = TextDetector.get_unique_instance()
-        output : list = text_detector.process(image)
+        ocr_model : TextRecognizer = TextRecognizer.get_unique_instance()
+        output : list = ocr_model.process(image, text_list=[])
         return output
     except Exception as e:
         raise HTTPException(

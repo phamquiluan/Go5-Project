@@ -1,29 +1,62 @@
 import os
+import cv2
+from typing import List
+from pydantic import BaseModel
+
+def show(img, name="disp", width=1000):
+    """
+    name: name of window, should be name of img
+    img: source of img, should in type ndarray
+    """
+    cv2.namedWindow(name, cv2.WINDOW_GUI_NORMAL)
+    cv2.resizeWindow(name, width, 1000)
+    cv2.imshow(name, img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+
+class Box(BaseModel):
+    name : str = "box"
+    xmin : int 
+    xmax : int 
+    ymin : int 
+    ymax : int 
+
+    @property
+    def width(self):
+        return max(self.xmax - self.xmin, 0)
+
+    @property
+    def height(self):
+        return max(self.ymax - self.ymin, 0)
+
+class Text(Box):
+    name : str = "text"
+    ocr : str = ""
+
 
 class TextRecognizer:
     instance = None
 
-    def __init__(self, weights_path = None):
+    def __init__(self):
+        import easyocr
         # init your model here
-        if weights_path is None:
-            weights_path = os.path.join(
-                os.path.dirname(__file__),
-                "weight.pth"
-            ) 
-            assert os.path.exists(weights_path), weights_path
-        
-        # TODO: change this
-        self.model = lambda x, y: [{
-            "name": "text",
-            "xmin": 100,
-            "ymin": 100,
-            "xmax": 200,
-            "ymax": 200,
-            "text": "hello world!"
-        }]
+        self.reader : easyocr.Reader = easyocr.Reader(["en"])
 
     def process(self, image, text_list : list):
-        output = self.model(image, text_list)
+        texts = self.reader.readtext(image)
+        
+        output = []
+        for (location, ocr, _) in texts:
+            xmin = int(min(p[0] for p in location))
+            xmax = int(max(p[0] for p in location))
+            ymin = int(min(p[1] for p in location))
+            ymax = int(max(p[1] for p in location))
+
+            new_text = Text(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, ocr=ocr)
+            output.append(new_text)
+
         return output
 
     @classmethod
@@ -34,40 +67,35 @@ class TextRecognizer:
         return cls.instance
 
 
+def draw(image, text_list : List[Text]):
+    for text in text_list:
+        cv2.rectangle(image, (text.xmin, text.ymin), (text.xmax, text.ymax), (255, 0 ,0), 4)
+    return image
+ 
 
-class OCRModel:
-    def __init__(self):
-        # TODO: khoi tao model
-        pass
-
-    def process(self, image):
-        # TODO process here
-        return "abc"
-
-def get_text_line_image():
-    # TODO:
-    pass
 
 def main():
-    import cv2
-    # input
-    image = cv2.imread("../sample.jpg")
-    text_line_list = [{
-        "xmin": 0,
-        "ymin": 0,
-        "xmax": 0,
-        "ymax": 0,
-    }]
+    # image = cv2.imread("/home/luan/research/Go5-Project/sample.jpg")
 
+    import glob
+    from tqdm import tqdm
+    for image_path in tqdm(glob.glob("/home/luan/research/Go5-Project/data/images/*.jpg")):
+        image_name = os.path.basename(image_path)
+        file_name = os.path.splitext(image_name)[0]
 
-    model = OCRModel()
-    
-    output_list = []
+        image = cv2.imread(image_path)
 
-    for text_line in text_line_list:
-        text_line_image = get_text_line_image(image, text_line)
-        output = model.process(text_line_image)
-        output_list.append(output)
+        model = TextRecognizer.get_unique_instance()
+        texts = model.process(image, text_list=[])
+        # cv2.imwrite(
+        #     f"/home/luan/research/Go5-Project/debug/{image_name}",
+        #     draw(image, texts)
+        # )
+        output = [t.dict() for t in texts]
+
+        import json
+        with open( f"/home/luan/research/Go5-Project/cache/ocr/{file_name}.json", "w") as ref:
+            json.dump(output, ref)
 
 if __name__ == "__main__":
     main()
