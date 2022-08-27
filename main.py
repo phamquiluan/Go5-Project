@@ -230,7 +230,7 @@ def merge_text_table(tables: List[Table], texts: List[Text]):
 
 @timeit
 def main():
-    image_path = "/home/luan/research/Go5-Project/sample.jpg"
+    image_path = os.path.join( os.path.dirname(__file__), "sample.jpg")
 
     # read table
     output: List = get_table(image_path)
@@ -243,7 +243,8 @@ def main():
     merge_text_table(tables, texts)
 
     image = cv2.imread(image_path)
-    show(draw(image, tables))
+    # show(draw(image, tables))
+    cv2.imwrite("debug.png", draw(image, tables))
 
 
 if __name__ == "__main__":

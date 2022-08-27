@@ -1,0 +1,6 @@
+opencv-python<4.3
+numpy
+pydantic
+requests
+tqdm
+python_dotenv
