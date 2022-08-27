@@ -1,7 +1,9 @@
 import os
-import cv2
 from typing import List
+
+import cv2
 from pydantic import BaseModel
+
 
 def show(img, name="disp", width=1000):
     """
@@ -18,10 +20,10 @@ def show(img, name="disp", width=1000):
 
 class Box(BaseModel):
     name : str = "box"
-    xmin : int 
-    xmax : int 
-    ymin : int 
-    ymax : int 
+    xmin : int
+    xmax : int
+    ymin : int
+    ymax : int
 
     @property
     def width(self):
@@ -41,12 +43,13 @@ class TextRecognizer:
 
     def __init__(self):
         import easyocr
+
         # init your model here
         self.reader : easyocr.Reader = easyocr.Reader(["en"])
 
     def process(self, image, text_list : list):
         texts = self.reader.readtext(image)
-        
+
         output = []
         for (location, ocr, _) in texts:
             xmin = int(min(p[0] for p in location))
@@ -71,13 +74,14 @@ def draw(image, text_list : List[Text]):
     for text in text_list:
         cv2.rectangle(image, (text.xmin, text.ymin), (text.xmax, text.ymax), (255, 0 ,0), 4)
     return image
- 
+
 
 
 def main():
     # image = cv2.imread("/home/luan/research/Go5-Project/sample.jpg")
 
     import glob
+
     from tqdm import tqdm
     for image_path in tqdm(glob.glob("/home/luan/research/Go5-Project/data/images/*.jpg")):
         image_name = os.path.basename(image_path)

@@ -6,3 +6,5 @@ data
 .vscode
 data
 .ipynb_checkpoints
+cache
+debug

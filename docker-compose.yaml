@@ -1,4 +1,4 @@
-version: "3.9" 
+version: "3.9"
 services:
   # table_detection:
   #   build: table_detection/
@@ -29,4 +29,3 @@ services:
     volumes:
       - ./text_recognition:/code
     restart: always
-  

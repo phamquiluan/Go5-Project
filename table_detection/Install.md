@@ -25,7 +25,7 @@ python setup.py develop
 
 cd Project/Go5-Project/table_detection/mmdetection/
 pip install -r requirements.txt
-pip install pillow==6.2.1 
+pip install pillow==6.2.1
 pip install mmcv==0.4.3
 ```
 
@@ -41,5 +41,3 @@ gdown "https://drive.google.com/u/0/uc?id=1-mVr4UBicFk3mjUz5tsVPjQ4jzRtiT7V&expo
 ```
 
 ##Then run the code in table_detection.py
-
-

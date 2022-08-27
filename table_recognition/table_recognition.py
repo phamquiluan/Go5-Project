@@ -1,10 +1,11 @@
+import glob
 import os
 from pathlib import Path
+from typing import List
+
 import cv2
 import numpy as np
-import glob
 from pydantic import BaseModel
-from typing import List
 from tqdm import tqdm
 
 CELL_MIN_WIDTH = 10
@@ -14,10 +15,10 @@ MIN_CELL_NUM_INSIDE_TABLE = 4
 
 class Box(BaseModel):
     name : str = "box"
-    xmin : int 
-    xmax : int 
-    ymin : int 
-    ymax : int 
+    xmin : int
+    xmax : int
+    ymin : int
+    ymax : int
 
     @property
     def width(self):
@@ -26,7 +27,7 @@ class Box(BaseModel):
     @property
     def height(self):
         return max(self.ymax - self.ymin, 0)
- 
+
 class Cell(Box):
     name : str = "cell"
     def is_valid(self):
@@ -50,7 +51,7 @@ def draw(image, table_list : List[Table]):
             cv2.rectangle(vis_image, (cell.xmin, cell.ymin), (cell.xmax, cell.ymax), get_random_color(), -1)
 
     return image // 2 + vis_image // 2
-    
+
 
 def show(img, name="disp", width=1000):
     """
@@ -81,7 +82,7 @@ class TableRecognizer:
         pass
 
     def process(self, image, table_list : list) -> List[Table]:
-        output = None 
+        pass
 
         # bin
         gray_image = ensure_gray(image)
@@ -90,7 +91,7 @@ class TableRecognizer:
         )
         vline = cv2.morphologyEx(bin_image, cv2.MORPH_OPEN, np.ones((image.shape[1] // 100, 1)))
         hline = cv2.morphologyEx(bin_image, cv2.MORPH_OPEN, np.ones((1, image.shape[1] // 100)))
- 
+
         mask = cv2.bitwise_or(vline, hline)
         mask = cv2.dilate(mask, np.ones((3, 3)))
 
@@ -110,7 +111,7 @@ class TableRecognizer:
                 xmax = max(p[0] for p in points)
                 ymin = min(p[1] for p in points)
                 ymax = max(p[1] for p in points)
-                    
+
                 new_table = Table(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax)
 
                 child_idx = hiers[idx][2]
@@ -130,7 +131,7 @@ class TableRecognizer:
                     tables.append(new_table)
                 else:  # this is frame
                     pass
-        
+
         # show(draw(image, tables))
         # output = self.model(image)
         return tables
@@ -152,9 +153,9 @@ def main():
 
         image = cv2.imread(image_path)
         tables = TableRecognizer().process(image, table_list=[])
-        
+
         # cv2.imwrite(f"/home/luan/research/Go5-Project/debug/{image_name}", draw(image, tables))
-        
+
         output = [t.dict() for t in tables]
 
         import json

@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+
 import cv2
 
 prj_root = Path(__file__).parent.parent.resolve()
@@ -13,9 +14,9 @@ class TextDetector:
             weights_path = os.path.join(
                 os.path.dirname(__file__),
                 "weight.pth"
-            ) 
+            )
             assert os.path.exists(weights_path), weights_path
-        
+
         # TODO: change this
         self.model = lambda x: [{
             "name": "text",
@@ -38,7 +39,7 @@ class TextDetector:
 
 
 def main():
-    input_image = cv2.imread(os.path.join(prj_root, "sample.jpg"))
+    cv2.imread(os.path.join(prj_root, "sample.jpg"))
 
     # TODO: code here
 

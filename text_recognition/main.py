@@ -1,11 +1,9 @@
-from typing import Union
-from pathlib import Path
-import os
-import cv2
 from http import HTTPStatus
-import numpy as np
 
-from fastapi import FastAPI, UploadFile, File, HTTPException
+import cv2
+import numpy as np
+from fastapi import FastAPI, File, HTTPException, UploadFile
+
 from text_recognition import TextRecognizer
 
 app = FastAPI()

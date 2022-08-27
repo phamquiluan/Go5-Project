@@ -1,16 +1,15 @@
+import mimetypes
 import os
+import time
+from functools import wraps
+from os import environ as env
+from typing import Dict, List
+
 import cv2
 import numpy as np
-import mimetypes
-from typing import List, Dict
-from pydantic import BaseModel
-
 import requests
 from dotenv import load_dotenv
-from os import environ as env
-
-from functools import wraps
-import time
+from pydantic import BaseModel
 
 
 def timeit(func):
@@ -34,10 +33,10 @@ TEXT_RECOGNITION_PORT=env["TEXT_RECOGNITION_PORT"]
 
 class Box(BaseModel):
     name : str = "box"
-    xmin : int 
-    xmax : int 
-    ymin : int 
-    ymax : int 
+    xmin : int
+    xmax : int
+    ymin : int
+    ymax : int
 
     @property
     def width(self):
@@ -50,7 +49,7 @@ class Box(BaseModel):
     @property
     def area(self):
         return self.width * self.height
-        
+
     def get_intersection(self, box):
         xmin = max(self.xmin, box.xmin)
         ymin = max(self.ymin, box.ymin)
@@ -65,7 +64,7 @@ class Box(BaseModel):
 class Text(Box):
     name : str = "text"
     ocr : str = ""
- 
+
 class Cell(Box):
     name : str = "cell"
     texts : List[Text] = []
@@ -107,7 +106,7 @@ def read_texts_from_list(input_list : List[Dict]) -> List[Text]:
                 ocr=item["ocr"]
             )
         )
-    return texts  
+    return texts
 
 @timeit
 def get_table(image_path):
@@ -153,11 +152,11 @@ def draw(image, table_list : List[Table]):
             cv2.rectangle(vis_image, (cell.xmin, cell.ymin), (cell.xmax, cell.ymax), get_random_color(), -1)
 
     vis_image = vis_image // 2 + image // 2
-    
+
     # draw table
     for table in table_list:
         cv2.rectangle(vis_image, (table.xmin, table.ymin), (table.xmax, table.ymax), (0, 0, 255), 4)
-    
+
     # draw text
     for table in table_list:
         for cell in table.cells:
@@ -181,11 +180,11 @@ def draw_text(image, text_list : List[Text]):
     for text in text_list:
         cv2.rectangle(image, (text.xmin, text.ymin), (text.xmax, text.ymax), (255, 0, 0), 2)
     return image
- 
+
 
 def merge_text_table(tables : List[Table], texts : List[Text]):
     for table in tables:
-        in_table_texts = [t for t in texts if t.get_intersection(table) > 0] 
+        in_table_texts = [t for t in texts if t.get_intersection(table) > 0]
 
         for cell in table.cells:
             cell.texts = [t for t in in_table_texts if t.get_intersection(cell) / t.area > 0.4]
@@ -193,7 +192,7 @@ def merge_text_table(tables : List[Table], texts : List[Text]):
 @timeit
 def main():
     image_path = '/home/luan/research/Go5-Project/sample.jpg'
-    
+
     # read table
     output : List = get_table(image_path)
     tables : List[Table] = read_tables_from_list(output)

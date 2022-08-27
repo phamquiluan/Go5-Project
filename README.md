@@ -20,13 +20,13 @@ cd text_detection
 ```
 
 2. create venv
-```bash 
+```bash
 python3.9 -m venv env
 . env/bin/activate
 ```
 
 3. install requirements
-```bash 
+```bash
 pip install -r requirements.txt
 ```
 
@@ -36,7 +36,7 @@ on your Python file.
 
 
 
-# Docker guide 
+# Docker guide
 
 ```
 export DOCKER_BUILDKIT=1

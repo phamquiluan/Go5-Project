@@ -1,8 +1,9 @@
+import glob
 import os
-import requests
+
 import cv2
 import numpy as np
-import glob
+import requests
 
 for image_path in glob.glob("../data/images/*.jpg"):
     image_name = os.path.basename(image_path)
@@ -25,7 +26,3 @@ for image_path in glob.glob("../data/images/*.jpg"):
 
     # visualize
     # image = cv2.imread(image_path)
-
-
-
-

@@ -1,12 +1,13 @@
 import os
-from pathlib import Path
-import cv2
-from mmdet.apis import init_detector, inference_detector, show_result_pyplot, show_result
-import mmcv
-import numpy as np
-import math
-from numpy import array, float32, size
+
+from mmdet.apis import (
+    inference_detector,
+    init_detector,
+    show_result,
+    show_result_pyplot,
+)
 from PIL import Image
+
 
 def return_table(table_coordinates):
 
@@ -22,7 +23,7 @@ def return_table(table_coordinates):
         }
 
         tables_dict.append(table_dict)
-  
+
     return tables_dict
 
 class TableDetector:
@@ -34,9 +35,9 @@ class TableDetector:
             weights_path = os.path.join(
                 os.path.dirname(__file__),
                 "weight.pth"
-            ) 
+            )
             assert os.path.exists(weights_path), weights_path
-        
+
         # TODO: change this
         self.model = lambda x: [{
             "name": "table",
@@ -62,11 +63,11 @@ def main():
     # Load model
     config_file = "Project/Go5-Project/table_detection/CascadeTabNet/Config/cascade_mask_rcnn_hrnetv2p_w32_20e.py"
     checkpoint_file = "Project/Go5-Project/table_detection/checkpoints/epoch_1.pth"
-    
+
     model = init_detector(config_file, checkpoint_file, device='cuda:0')
 
     img = "/Go5-Project/sample.jpg"
-    
+
     # Run Inference
     result = inference_detector(model, img)
 
@@ -79,18 +80,18 @@ def main():
     ## extracting borderless tables
     for borderless_tables in result[0][2]:
 	    table_coordinates.append(borderless_tables[:4].astype(int))
-    
+
     table_data = return_table(table_coordinates)
 
     if len(table_data) != 0:
         # visualize the results in a new window
         show_result_pyplot(img, result,('Bordered', 'Cell', 'Borderless'), score_thr=0.8)
-        
+
         # or save the visualization results to image files
         show_result(img, result, ('Bordered', 'Cell', 'Borderless'), out_file = "out_file.jpg")
     else:
-        im1 = Image.open(img) 
-  
+        im1 = Image.open(img)
+
         im1 = im1.save("out_file.jpg")
 
     for i in table_data:
@@ -101,6 +102,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
