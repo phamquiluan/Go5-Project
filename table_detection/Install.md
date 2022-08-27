@@ -2,7 +2,6 @@
 
 ##Go into your prefer directory and Clone the repo
 
-
 ```
 mkdir Project
 cd Project/
@@ -30,12 +29,14 @@ pip install mmcv==0.4.3
 ```
 
 ##Clone the repo
+
 ```
 cd Project/Go5-Project/table_detection
 git clone https://github.com/DevashishPrasad/CascadeTabNet.git
 ```
 
 ##Download the Pretrained Model
+
 ```
 gdown "https://drive.google.com/u/0/uc?id=1-mVr4UBicFk3mjUz5tsVPjQ4jzRtiT7V&export=download"
 ```

@@ -14,11 +14,11 @@ MIN_CELL_NUM_INSIDE_TABLE = 4
 
 
 class Box(BaseModel):
-    name : str = "box"
-    xmin : int
-    xmax : int
-    ymin : int
-    ymax : int
+    name: str = "box"
+    xmin: int
+    xmax: int
+    ymin: int
+    ymax: int
 
     @property
     def width(self):
@@ -28,27 +28,37 @@ class Box(BaseModel):
     def height(self):
         return max(self.ymax - self.ymin, 0)
 
+
 class Cell(Box):
-    name : str = "cell"
+    name: str = "cell"
+
     def is_valid(self):
         return self.width > CELL_MIN_WIDTH and self.height > CELL_MIN_HEIGHT
 
 
 class Table(Box):
-    name : str = "table"
-    cells : List[Cell] = []
+    name: str = "table"
+    cells: List[Cell] = []
+
 
 def get_random_color():
     return tuple((np.random.random(3) * 153 + 102).astype(np.uint8).tolist())
 
-def draw(image, table_list : List[Table]):
+
+def draw(image, table_list: List[Table]):
     vis_image = image.copy()
     # for table in table_list:
     #     cv2.rectangle(image, (table.xmin, table.ymin), (table.xmax, table.ymax), (255, 0 ,0), 4)
 
     for table in table_list:
         for cell in table.cells:
-            cv2.rectangle(vis_image, (cell.xmin, cell.ymin), (cell.xmax, cell.ymax), get_random_color(), -1)
+            cv2.rectangle(
+                vis_image,
+                (cell.xmin, cell.ymin),
+                (cell.xmax, cell.ymax),
+                get_random_color(),
+                -1,
+            )
 
     return image // 2 + vis_image // 2
 
@@ -67,9 +77,10 @@ def show(img, name="disp", width=1000):
 
 prj_root = Path(__file__).parent.parent.resolve()
 
+
 def ensure_gray(image):
     try:
-        image= cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     except:
         pass
     return image
@@ -78,10 +89,10 @@ def ensure_gray(image):
 class TableRecognizer:
     instance = None
 
-    def __init__(self, weights_path = None):
+    def __init__(self, weights_path=None):
         pass
 
-    def process(self, image, table_list : list) -> List[Table]:
+    def process(self, image, table_list: list) -> List[Table]:
         pass
 
         # bin
@@ -89,8 +100,12 @@ class TableRecognizer:
         bin_image = cv2.adaptiveThreshold(
             ~gray_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 15, -10
         )
-        vline = cv2.morphologyEx(bin_image, cv2.MORPH_OPEN, np.ones((image.shape[1] // 100, 1)))
-        hline = cv2.morphologyEx(bin_image, cv2.MORPH_OPEN, np.ones((1, image.shape[1] // 100)))
+        vline = cv2.morphologyEx(
+            bin_image, cv2.MORPH_OPEN, np.ones((image.shape[1] // 100, 1))
+        )
+        hline = cv2.morphologyEx(
+            bin_image, cv2.MORPH_OPEN, np.ones((1, image.shape[1] // 100))
+        )
 
         mask = cv2.bitwise_or(vline, hline)
         mask = cv2.dilate(mask, np.ones((3, 3)))
@@ -147,7 +162,9 @@ class TableRecognizer:
 def main():
     # input_image = cv2.imread(os.path.join(prj_root, "sample.jpg"))
 
-    for image_path in tqdm(glob.glob("/home/luan/research/Go5-Project/data/images/*.jpg")):
+    for image_path in tqdm(
+        glob.glob("/home/luan/research/Go5-Project/data/images/*.jpg")
+    ):
         image_name = os.path.basename(image_path)
         filename = os.path.splitext(image_name)[0]
 
@@ -159,8 +176,12 @@ def main():
         output = [t.dict() for t in tables]
 
         import json
-        with open(f"/home/luan/research/Go5-Project/cache/table/{filename}.json", "w") as ref:
+
+        with open(
+            f"/home/luan/research/Go5-Project/cache/table/{filename}.json", "w"
+        ) as ref:
             json.dump(output, ref)
+
 
 if __name__ == "__main__":
     main()

@@ -13,11 +13,13 @@ app = FastAPI()
 def get_health_live() -> bool:
     return True
 
+
 def isImageFile(file: UploadFile = File(...)):
     return file.content_type in ["image/png", "image/jpeg"]
 
+
 @app.post("/ai/infer")
-async def process(file: UploadFile = File(...), table_list : list = None):
+async def process(file: UploadFile = File(...), table_list: list = None):
     try:
         image = None
         if isImageFile(file):
@@ -34,11 +36,10 @@ async def process(file: UploadFile = File(...), table_list : list = None):
 
         print(f"Table list: {table_list}")
 
-        table_recognizer : TableRecognizer = TableRecognizer.get_unique_instance()
-        tables : list = table_recognizer.process(image, table_list= table_list)
+        table_recognizer: TableRecognizer = TableRecognizer.get_unique_instance()
+        tables: list = table_recognizer.process(image, table_list=table_list)
         return [t.dict() for t in tables]
     except Exception as e:
         raise HTTPException(
-            status_code=HTTPStatus.INTERNAL_SERVER_ERROR.value,
-            detail=e.__repr__()
+            status_code=HTTPStatus.INTERNAL_SERVER_ERROR.value, detail=e.__repr__()
         )

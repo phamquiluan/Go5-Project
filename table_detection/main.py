@@ -15,8 +15,10 @@ app = FastAPI()
 def get_health_live() -> bool:
     return True
 
+
 def isImageFile(file: UploadFile = File(...)):
     return file.content_type in ["image/png", "image/jpeg"]
+
 
 @app.post("/ai/infer")
 async def process(file: UploadFile = File(...)):
@@ -34,18 +36,18 @@ async def process(file: UploadFile = File(...)):
             )
         assert image is not None
 
-        table_detector : TableDetector = TableDetector.get_unique_instance()
-        output : list = table_detector.process(image)
+        table_detector: TableDetector = TableDetector.get_unique_instance()
+        output: list = table_detector.process(image)
         return output
     except Exception as e:
         raise HTTPException(
-            status_code=HTTPStatus.INTERNAL_SERVER_ERROR.value,
-            detail=e.__repr__()
+            status_code=HTTPStatus.INTERNAL_SERVER_ERROR.value, detail=e.__repr__()
         )
+
 
 if __name__ == "__main__":
     prj_root = Path(__file__).parent.parent.resolve()
     input_image = cv2.imread(os.path.join(prj_root, "sample.jpg"))
 
-    table_detector : TableDetector = TableDetector.get_unique_instance()
+    table_detector: TableDetector = TableDetector.get_unique_instance()
     print(table_detector.process(input_image))

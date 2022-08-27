@@ -13,8 +13,10 @@ app = FastAPI()
 def get_health_live() -> bool:
     return True
 
+
 def isImageFile(file: UploadFile = File(...)):
     return file.content_type in ["image/png", "image/jpeg"]
+
 
 @app.post("/ai/infer")
 async def process(file: UploadFile = File(...)):
@@ -32,11 +34,10 @@ async def process(file: UploadFile = File(...)):
             )
         assert image is not None
 
-        ocr_model : TextRecognizer = TextRecognizer.get_unique_instance()
-        output : list = ocr_model.process(image, text_list=[])
+        ocr_model: TextRecognizer = TextRecognizer.get_unique_instance()
+        output: list = ocr_model.process(image, text_list=[])
         return output
     except Exception as e:
         raise HTTPException(
-            status_code=HTTPStatus.INTERNAL_SERVER_ERROR.value,
-            detail=e.__repr__()
+            status_code=HTTPStatus.INTERNAL_SERVER_ERROR.value, detail=e.__repr__()
         )

@@ -17,13 +17,12 @@ def show(img, name="disp", width=1000):
     cv2.destroyAllWindows()
 
 
-
 class Box(BaseModel):
-    name : str = "box"
-    xmin : int
-    xmax : int
-    ymin : int
-    ymax : int
+    name: str = "box"
+    xmin: int
+    xmax: int
+    ymin: int
+    ymax: int
 
     @property
     def width(self):
@@ -33,9 +32,10 @@ class Box(BaseModel):
     def height(self):
         return max(self.ymax - self.ymin, 0)
 
+
 class Text(Box):
-    name : str = "text"
-    ocr : str = ""
+    name: str = "text"
+    ocr: str = ""
 
 
 class TextRecognizer:
@@ -45,9 +45,9 @@ class TextRecognizer:
         import easyocr
 
         # init your model here
-        self.reader : easyocr.Reader = easyocr.Reader(["en"])
+        self.reader: easyocr.Reader = easyocr.Reader(["en"])
 
-    def process(self, image, text_list : list):
+    def process(self, image, text_list: list):
         texts = self.reader.readtext(image)
 
         output = []
@@ -70,11 +70,12 @@ class TextRecognizer:
         return cls.instance
 
 
-def draw(image, text_list : List[Text]):
+def draw(image, text_list: List[Text]):
     for text in text_list:
-        cv2.rectangle(image, (text.xmin, text.ymin), (text.xmax, text.ymax), (255, 0 ,0), 4)
+        cv2.rectangle(
+            image, (text.xmin, text.ymin), (text.xmax, text.ymax), (255, 0, 0), 4
+        )
     return image
-
 
 
 def main():
@@ -83,7 +84,10 @@ def main():
     import glob
 
     from tqdm import tqdm
-    for image_path in tqdm(glob.glob("/home/luan/research/Go5-Project/data/images/*.jpg")):
+
+    for image_path in tqdm(
+        glob.glob("/home/luan/research/Go5-Project/data/images/*.jpg")
+    ):
         image_name = os.path.basename(image_path)
         file_name = os.path.splitext(image_name)[0]
 
@@ -98,8 +102,12 @@ def main():
         output = [t.dict() for t in texts]
 
         import json
-        with open( f"/home/luan/research/Go5-Project/cache/ocr/{file_name}.json", "w") as ref:
+
+        with open(
+            f"/home/luan/research/Go5-Project/cache/ocr/{file_name}.json", "w"
+        ) as ref:
             json.dump(output, ref)
+
 
 if __name__ == "__main__":
     main()
