@@ -19,6 +19,12 @@ docker compose up
 streamlit run streamlit_app.py
 ```
 
+4. (optional) port forwarding if your app is running on a server
+
+```bash
+ssh -L 8501:localhost:8501 <username>@<server_ip_address
+```
+
 ![](https://user-images.githubusercontent.com/24642166/187080608-fbd3ae88-48fe-4a6d-bbe5-1a704098fcae.png)
 
 ![](https://user-images.githubusercontent.com/24642166/187080611-1c8b44b3-3332-48df-a7d2-8274d0e427da.png)
