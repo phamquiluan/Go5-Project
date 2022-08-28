@@ -72,7 +72,7 @@ def draw(image, table_list: List[Table]):
                 cell.ocr,
                 (cell.xmin, cell.ymin),
                 cv2.FONT_HERSHEY_SIMPLEX,
-                0.5,
+                0.7,
                 (0, 0, 255),
                 1,
             )
@@ -124,6 +124,7 @@ def dump_excel(tables: List[Table], file_path):
 
     table_start_index = 0
     for table in tables:
+        table.indexing()
         for cell in table.cells:
             if cell.start_row == cell.end_row and cell.start_col == cell.end_col:
                 worksheet.write(
