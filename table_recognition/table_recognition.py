@@ -93,8 +93,6 @@ class TableRecognizer:
         pass
 
     def process(self, image, table_list: list) -> List[Table]:
-        pass
-
         # bin
         gray_image = ensure_gray(image)
         bin_image = cv2.adaptiveThreshold(
