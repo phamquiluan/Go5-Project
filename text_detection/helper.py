@@ -20,7 +20,7 @@ def run_inference(img_path, output_dir):
     # import os
     offset = 1
     
-    mmocr = MMOCR(det='TextSnake', recog=None)
+    mmocr = MMOCR(det='MaskRCNN_IC17', recog=None)
 
     results = mmocr.readtext(img_path, output='outputs/demo_text_det_pred.jpg')
 
