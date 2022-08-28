@@ -137,6 +137,7 @@ class Table(Box):
 
 
 def read_tables_from_list(input_list: List[Dict]) -> List[Table]:
+    assert isinstance(input_list, list), input_list
     tables = []
     for item in input_list:
         if item["name"] != "table":
