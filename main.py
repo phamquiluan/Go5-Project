@@ -5,11 +5,22 @@ from os import environ as env
 from typing import List
 
 import requests
+import streamlit as st
 from dotenv import load_dotenv
 from tqdm import tqdm
 
 from classes import Table, Text, read_tables_from_list, read_texts_from_list
 from utility import dump_excel, load_json, merge_text_table, timeit
+
+st.set_page_config(
+    layout="centered", page_icon="🖱️", page_title="Interactive table app"
+)
+st.title("🖱️ Interactive table app")
+st.write(
+    """This app shows how you can use the [streamlit-aggrid](STREAMLIT_AGGRID_URL)
+    Streamlit component in an interactive way so as to display additional content
+    based on user click."""
+)
 
 # load env var
 load_dotenv()
