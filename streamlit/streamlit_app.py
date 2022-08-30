@@ -5,11 +5,11 @@ import cv2
 import numpy as np
 import pandas as pd
 import requests
-import streamlit as st
-from dotenv import load_dotenv
-
 from classes import read_tables_from_list, read_texts_from_list
+from dotenv import load_dotenv
 from utility import dump_excel, get_random_color, merge_text_table
+
+import streamlit as st
 
 # load env var
 load_dotenv()

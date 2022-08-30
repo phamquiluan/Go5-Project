@@ -29,3 +29,18 @@ services:
     volumes:
       - ./text_recognition:/code
     restart: always
+  streamlit:
+    build: streamlit/
+    environment:
+      - TABLE_DETECTION_PORT="${TABLE_DETECTION_PORT}"
+      - TABLE_RECOGNITION_PORT="${TABLE_RECOGNITION_PORT}"
+      - TEXT_DETECTION_PORT="${TEXT_DETECTION_PORT}"
+      - TEXT_RECOGNITION_PORT="${TEXT_RECOGNITION_PORT}"
+    ports:
+      - "${APP}:8501"
+    volumes:
+      - ./streamlit:/code
+    restart: always
+    depends_on:
+      - text_recognition
+      - table_recognition

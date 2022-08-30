@@ -5,7 +5,6 @@ from typing import Dict, List
 
 import cv2
 import numpy as np
-
 from classes import Table, Text
 
 
