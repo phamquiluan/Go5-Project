@@ -79,11 +79,14 @@ def app():
                         st.header(f"Table {idx + 1}")
 
                     df = None
-                    xslx_path = "debug.xlsx"
-                    dump_excel([tables[idx]], xslx_path)
-                    with open(xslx_path, "rb") as ref:
+                    xlsx_path = f"debug_{idx}.xlsx"
+                    dump_excel([tables[idx]], xlsx_path)
+                    with open(xlsx_path, "rb") as ref:
                         df = pd.read_excel(ref)
-                    st.dataframe(df)
+                        st.dataframe(df)
+                        st.download_button(
+                            "Download Excel File", ref, file_name=f"output_{idx}.xlsx"
+                        )
 
         with tab2:
             st.header("Table Detection & Recognition")
