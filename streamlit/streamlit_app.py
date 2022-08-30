@@ -13,23 +13,8 @@ import streamlit as st
 
 # load env var
 load_dotenv()
-TABLE_DETECTION_PORT = env["TABLE_DETECTION_PORT"]
 TABLE_RECOGNITION_PORT = env["TABLE_RECOGNITION_PORT"]
-TEXT_DETECTION_PORT = env["TEXT_DETECTION_PORT"]
 TEXT_RECOGNITION_PORT = env["TEXT_RECOGNITION_PORT"]
-
-
-# def get_ocr(image_path):
-#     image_name = os.path.basename(image_path)
-#     url = f"http://localhost:{TEXT_RECOGNITION_PORT}/ai/infer"
-#     files = [
-#         (
-#             "file",
-#             (image_name, open(image_path, "rb"), mimetypes.guess_type(image_path)[0]),
-#         )
-#     ]
-#     response = requests.request("POST", url, files=files)
-#     return response.json()
 
 
 st.set_page_config(layout="wide", page_icon="🖱️", page_title="Interactive table app")
@@ -51,7 +36,7 @@ def app():
 
         tables = []
         with st.spinner("🤖 Extracting Table Structure! "):
-            url = f"http://localhost:{TABLE_RECOGNITION_PORT}/ai/infer"
+            url = "http://table_recognition:80/ai/infer"
             files = [
                 (
                     "file",
@@ -65,7 +50,7 @@ def app():
 
         texts = []
         with st.spinner("🤖 Extracting Text Regions and OCR! "):
-            url = f"http://localhost:{TEXT_RECOGNITION_PORT}/ai/infer"
+            url = "http://text_recognition:80/ai/infer"
             files = [
                 (
                     "file",
@@ -154,17 +139,6 @@ def app():
                         )
 
             st.image(vimage)
-        # for table in tables:
-        #     df = None
-        #     xslx_path = "debug.xlsx"
-        #     dump_excel([table], xslx_path)
-        #     with open(xslx_path, "rb") as ref:
-        #         df = pd.read_excel(ref)
-        #     st.dataframe(df)
-        # placeholder.empty()
-        # st.image(image, caption=["output"], width=1000)
-        #     st.json(json.dumps(output))
-
         st.balloons()
 
 
