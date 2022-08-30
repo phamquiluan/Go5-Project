@@ -34,8 +34,6 @@ async def process(file: UploadFile = File(...), table_list: list = None):
             )
         assert image is not None
 
-        print(f"Table list: {table_list}")
-
         table_recognizer: TableRecognizer = TableRecognizer.get_unique_instance()
         tables: list = table_recognizer.process(image, table_list=table_list)
         return [t.dict() for t in tables]

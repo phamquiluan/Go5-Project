@@ -1,4 +1,6 @@
+import os
 from os import environ as env
+from tempfile import TemporaryDirectory
 from typing import Dict, List
 
 import cv2
@@ -78,15 +80,18 @@ def app():
                     if len(tables) > 1:
                         st.header(f"Table {idx + 1}")
 
-                    df = None
-                    xlsx_path = f"debug_{idx}.xlsx"
-                    dump_excel([tables[idx]], xlsx_path)
-                    with open(xlsx_path, "rb") as ref:
-                        df = pd.read_excel(ref)
-                        st.dataframe(df)
-                        st.download_button(
-                            "Download Excel File", ref, file_name=f"output_{idx}.xlsx"
-                        )
+                    with TemporaryDirectory() as temp_dir_path:
+                        df = None
+                        xlsx_path = os.path.join(temp_dir_path, f"debug_{idx}.xlsx")
+                        dump_excel([tables[idx]], xlsx_path)
+                        with open(xlsx_path, "rb") as ref:
+                            df = pd.read_excel(ref)
+                            st.dataframe(df)
+                            st.download_button(
+                                "Download Excel File",
+                                ref,
+                                file_name=f"output_{idx}.xlsx",
+                            )
 
         with tab2:
             st.header("Table Detection & Recognition")
