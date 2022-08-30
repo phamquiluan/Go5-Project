@@ -48,7 +48,7 @@ class TextRecognizer:
         self.reader: easyocr.Reader = easyocr.Reader(["en"])
 
     def process(self, image, text_list: list):
-        texts = self.reader.readtext(image)
+        texts = self.reader.readtext(image, min_size=1, text_threshold=0.3)
 
         output = []
         for (location, ocr, _) in texts:
