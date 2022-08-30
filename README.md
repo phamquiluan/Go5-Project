@@ -12,14 +12,12 @@ git@github.com:phamquiluan/Go5-Project.git
 2. pin up services
 ```bash
 cd Go5-Project
+
+export DOCKER_BUILDKIT=1
 docker compose up
 ```
-3. run stream lit app
-```bash
-streamlit run streamlit_app.py
-```
 
-4. (optional) port forwarding if your app is running on a server
+3. (optional) port forwarding if your app is running on a server
 
 ```bash
 ssh -L 8501:localhost:8501 <username>@<server_ip_address>
