@@ -3,8 +3,7 @@ FROM python:3.7
 WORKDIR /code
 
 COPY requirements.txt /code
-RUN --mount=type=cache,target=/root/.cache \
-	pip install -r requirements.txt
+RUN pip install -r requirements.txt
 
 COPY streamlit_app.py classes.py utility.py /code/
 
