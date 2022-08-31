@@ -20,10 +20,10 @@ export DOCKER_BUILDKIT=1
 docker compose up
 ```
 
-3. (optional) port forwarding if your app is running on a server
+3. open browser with below url
 
 ```bash
-ssh -L 8501:localhost:8501 <username>@<server_ip_address>
+localhost:8501  # you can update the port the .env file
 ```
 
 ![](https://user-images.githubusercontent.com/24642166/187080608-fbd3ae88-48fe-4a6d-bbe5-1a704098fcae.png)
