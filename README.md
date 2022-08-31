@@ -1,4 +1,5 @@
 # The Go5-Project
+[![Docker Image CI](https://github.com/phamquiluan/Go5-Project/actions/workflows/docker-image.yml/badge.svg)](https://github.com/phamquiluan/Go5-Project/actions/workflows/docker-image.yml)
 
 ![](https://user-images.githubusercontent.com/24642166/115177933-6ca5b780-a0fa-11eb-810d-3a5daba2ef6e.gif)
 
