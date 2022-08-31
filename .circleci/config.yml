@@ -12,3 +12,12 @@ workflows:
   main:
     jobs:
       - build
+  code-rot-check-daily:
+    triggers:
+      - schedule:
+          cron: "35 18 * * *"
+          filters:
+            branches:
+              only: main
+    jobs:
+      - build
