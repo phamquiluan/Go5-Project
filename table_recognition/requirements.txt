@@ -2,7 +2,6 @@ opencv-python
 fastapi
 uvicorn[standard]
 python-multipart
-<<<<<<< HEAD
 tqdm
 numpy
 pydantic
