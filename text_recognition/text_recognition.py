@@ -1,19 +1,8 @@
 import os
 from typing import List
-import sys
-
-import yaml
-sys.path.append('/home/daitama/Desktop/Go5/Go5-Project')
 
 import cv2
 from pydantic import BaseModel
-from ABINet.demo import get_model, load, readtext
-from text_detection.text_detection import TextDetector
-from ABINet.configs import *
-from ABINet.utils import Config
-
-print("hello")
-
 
 
 def show(img, name="disp", width=1000):
@@ -54,17 +43,18 @@ class TextRecognizer:
 
     def __init__(self):
         import easyocr
+
         self.reader: easyocr.Reader = easyocr.Reader(["en"])
 
     def process(self, image, text_list: list):
         texts = self.reader.readtext(image, min_size=1, text_threshold=0.3)
 
         output = []
-        for (location, ocr) in texts:
-            xmin = int(location[0])
-            xmax = int(location[2])
-            ymin = int(location[1])
-            ymax = int(location[3])
+        for (location, ocr, _) in texts:
+            xmin = int(min(p[0] for p in location))
+            xmax = int(max(p[0] for p in location))
+            ymin = int(min(p[1] for p in location))
+            ymax = int(max(p[1] for p in location))
 
             new_text = Text(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, ocr=ocr)
             output.append(new_text)
