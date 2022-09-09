@@ -59,4 +59,7 @@ RUN --mount=type=cache,target=/root/.cache \
 
 COPY . .
 EXPOSE 80
+
+# download weight
+RUN python -c "from text_recognition import TextRecognizer; TextRecognizer.get_unique_instance()"
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
