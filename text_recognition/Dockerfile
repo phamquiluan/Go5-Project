@@ -58,4 +58,5 @@ RUN --mount=type=cache,target=/root/.cache \
 	pip install fastapi pydantic python-multipart "uvicorn[standard]"
 
 COPY . .
+EXPOSE 80
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
