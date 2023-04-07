@@ -22,7 +22,7 @@ git@github.com:phamquiluan/Go5-Project.git
 ```bash
 cd Go5-Project
 
-COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up --build
+COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose up --build
 ```
 
 ## 3. Open browser with url
