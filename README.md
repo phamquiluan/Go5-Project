@@ -15,7 +15,7 @@
 
 ## 1. Clone
 ```bash
-git@github.com:phamquiluan/Go5-Project.git
+git lone git@github.com:phamquiluan/Go5-Project.git
 ```
 
 ## 2. Start up services
