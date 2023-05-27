@@ -12,7 +12,7 @@ workflows:
   main:
     jobs:
       - build
-  code-rot-check-daily:
+  daily-build:
     triggers:
       - schedule:
           cron: "35 18 * * *"
