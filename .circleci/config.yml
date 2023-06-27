@@ -2,7 +2,7 @@ version: 2.1
 
 jobs:
   build:
-    machine:
+    docker:
       image: cimg/base:2023.06
     steps:
       - checkout
