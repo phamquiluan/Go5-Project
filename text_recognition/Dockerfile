@@ -3,7 +3,7 @@ FROM nvidia/cuda:11.6.2-devel-ubuntu20.04 as base
 # FROM nvidia/cuda:11.6.0-cudnn8-runtime-ubuntu18.04 as base
 
 RUN apt-get update -qqy && \
-  apt-get install -y \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y \
   build-essential \
   cmake \
   curl \
@@ -16,13 +16,14 @@ RUN apt-get update -qqy && \
   locales \
   pkg-config \
   poppler-utils \
-  python3.7 python3.7-dev python3.7-distutils \
+  # python3.7 python3.7-dev python3.7-distutils \
+  python3.8 python3.8-dev \
   python3-pip \
   software-properties-common \
   unzip \
   wget \
   && \
-  update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1 \
+  update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1 \
   && \
   apt-get clean && \
   apt-get autoremove && \
