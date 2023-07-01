@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1.0.0-experimental
-FROM nvidia/cuda:11.6.0-cudnn8-runtime-ubuntu18.04 as base
+FROM nvidia/cuda:11.6.2-devel-ubuntu20.04 as base
+# FROM nvidia/cuda:11.6.0-cudnn8-runtime-ubuntu18.04 as base
 
 RUN apt-get update -qqy && \
   apt-get install -y \
