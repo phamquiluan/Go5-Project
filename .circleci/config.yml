@@ -4,6 +4,7 @@ jobs:
   build:
     machine:
       image: ubuntu-2004:current
+    resource_class: large 
     steps:
       - checkout
       - run: COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose build
