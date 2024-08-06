@@ -2,7 +2,7 @@ opencv-python
 fastapi
 uvicorn[standard]
 python-multipart
-torch
+torch<2.0
 torchvision
 openmim
 ipykernel
